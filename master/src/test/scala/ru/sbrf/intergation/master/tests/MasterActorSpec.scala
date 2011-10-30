@@ -29,5 +29,12 @@ class MasterActorSpec extends Specification {
         case wtf => failure("Master actor does not work properly")
       }
     }
+
+    "If send not a command then return IllegalArgumentException" in {
+      (agent ? "Wrong").get match {
+        case ex: IllegalArgumentException  =>  ex.getMessage mustEqual  "Agent receive not a Command[+T] - Wrong"
+        case _ => failure("Wrong error handling")
+      }
+    }
   }
 }
