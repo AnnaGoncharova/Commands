@@ -1,19 +1,23 @@
 package ru.sbrf.integration.agent
 
 import ru.sbrf.integration.agent.handlers.{AliveHandler, PingPongHandler}
-import ru.sbrf.integration.commands.{PingPong, Alive}
 import akka.actor.Actor._
-import ru.sbrf.integration.{Failure, Command}
 import akka.actor.Actor
+import ru.sbrf.integration.commands.{Failure, Command, PingPong, Alive}
+import ru.sbrf.integration.discovery.{DiscoveryEventType, AgentDiscoveryEvent}
 
 object Agent {
-
   def run() = {
     Actor.remote.start("localhost", 1111)
     Actor.remote.register("config-service", actorOf[AgentActor])
   }
 
-  def main(args: Array[String]) = run
+  def main(args: Array[String]) = {
+    val master = remote.actorFor("discovery-service", "localhost", 2222).start()
+    master ? AgentDiscoveryEvent("localhost", 2222, DiscoveryEventType.Add)
+
+    run()
+  }
 }
 
 class AgentActor extends Actor {
@@ -29,7 +33,7 @@ class AgentActor extends Actor {
   def receive = {
     case command: Command[_] => self.reply(executeCommand(command))
     case wtf => {
-      self.reply( new Failure(new UnknownInputException("Input %s not recognized as command" format wtf )))
+      self.reply(new Failure(new UnknownInputException("Input %s not recognized as command" format wtf)))
     }
   }
 }

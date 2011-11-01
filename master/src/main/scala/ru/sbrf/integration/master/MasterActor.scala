@@ -1,22 +1,23 @@
 package ru.sbrf.integration.master
 
-import ru.sbrf.integration.{Failure, Success, Command}
-import ru.sbrf.integration.commands.{PingPong, Alive}
 import akka.actor.Actor._
 import akka.actor.Actor
+import ru.sbrf.integration.commands.{Failure, Success, Command}
 
 object Master extends App {
-  val master = actorOf(new MasterActor)
-  master.start()
-  master ? Alive()
-  master ? PingPong("Hey")
-  master.stop()
-  remote.shutdown()
+  Actor.remote.start("localhost", 2222)
+  Actor.remote.register("discovery-service", actorOf[AgentDiscoveryActor])
+
+  val master = actorOf[MasterActor].start()
+  val discover = actorOf[AgentDiscoveryActor].start()
+
+  readLine()
 }
 
 class MasterActor extends Actor {
 
   val agent = remote actorFor("config-service", "localhost", 1111)
+
 
   def sendCommand(command: Command[_]) = {
     (agent ? command).get match {

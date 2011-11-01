@@ -1,4 +1,4 @@
-package ru.sbrf.integration
+package ru.sbrf.integration.commands
 
 sealed abstract class CommandResult[+T]
 

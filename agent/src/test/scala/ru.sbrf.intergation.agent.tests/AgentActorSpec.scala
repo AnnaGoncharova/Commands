@@ -5,9 +5,8 @@ import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import org.specs2.mutable.Specification
 import akka.actor.Actor
-import ru.sbrf.integration.commands.{PingPong, Alive}
-import ru.sbrf.integration.{Failure, Success}
 import ru.sbrf.integration.agent.{AgentActor, UnsupportedCommandException, Agent}
+import ru.sbrf.integration.commands.{Failure, Success, PingPong, Alive}
 
 @RunWith(classOf[JUnitRunner])
 class AgentActorSpec extends Specification {

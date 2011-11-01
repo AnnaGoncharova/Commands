@@ -1,6 +1,6 @@
 package ru.sbrf.integration.agent
 
-import ru.sbrf.integration.{Success, Failure, Command}
+import ru.sbrf.integration.commands.{Failure, Success, Command}
 
 trait CommandHandler[C <: Command[T], T] {
 

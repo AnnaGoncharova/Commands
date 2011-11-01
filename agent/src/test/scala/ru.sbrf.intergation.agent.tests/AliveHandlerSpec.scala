@@ -4,8 +4,7 @@ import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import org.specs2.mutable.Specification
 import ru.sbrf.integration.agent.handlers.AliveHandler
-import ru.sbrf.integration.commands.Alive
-import ru.sbrf.integration.Success
+import ru.sbrf.integration.commands.{Success, Alive}
 
 @RunWith(classOf[JUnitRunner])
 class AliveHandlerSpec extends Specification {

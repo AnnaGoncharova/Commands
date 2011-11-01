@@ -1,6 +1,6 @@
 package tests
 
-import ru.sbrf.integration.Command
+import ru.sbrf.integration.commands.Command
 
 object UnsupportedCommand {
   def apply() = { new UnsupportedCommand }
