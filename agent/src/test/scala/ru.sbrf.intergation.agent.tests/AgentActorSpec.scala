@@ -1,6 +1,5 @@
-package ru.sbrf.integration.agent.tests
+package ru.sbrf.intergation.agent.tests
 
-import _root_.tests.UnsupportedCommand
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import org.specs2.mutable.Specification

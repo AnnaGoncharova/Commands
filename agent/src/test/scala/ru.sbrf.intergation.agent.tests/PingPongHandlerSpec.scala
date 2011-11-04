@@ -1,4 +1,4 @@
-package tests
+package ru.sbrf.intergation.agent.tests
 
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner

@@ -11,15 +11,9 @@ class MasterDiscoveryActor extends Actor {
   val event = new AgentDiscoveryEvent(new AgentAddress("localhost", 2222))
   val ping = "Ping"
 
-  override def preStart { self ! ping}
+  override def preStart() { Scheduler.schedule(self, ping, 5, 5, SECONDS) }
 
   def receive = {
-    case ping => {
-      try { master ! event } catch {
-        case ex => println("Master not discovered")
-      } finally {
-        Scheduler.scheduleOnce(self, ping, 5, SECONDS)
-      }
-    }
+    case wtf => {}
   }
 }

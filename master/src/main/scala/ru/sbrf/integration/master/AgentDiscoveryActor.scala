@@ -25,6 +25,6 @@ class AgentDiscoveryActor extends Actor {
 
   def receive = {
     case AgentDiscoveryEvent(address) => agentDiscovered(address)
-    case clean => cleanInactiveAgent()
+    case s: String => cleanInactiveAgent()
   }
 }

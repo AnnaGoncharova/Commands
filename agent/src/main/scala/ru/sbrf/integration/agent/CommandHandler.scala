@@ -2,7 +2,7 @@ package ru.sbrf.integration.agent
 
 import ru.sbrf.integration.commands.{Failure, Success, Command}
 
-trait CommandHandler[C <: Command[T], T] {
+abstract class CommandHandler[C <: Command[T], T] {
 
   val command: C
 
