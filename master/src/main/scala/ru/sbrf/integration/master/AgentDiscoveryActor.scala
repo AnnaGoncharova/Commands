@@ -1,28 +1,30 @@
 package ru.sbrf.integration.master
 
-import akka.actor.{ActorRef, Actor}
-import ru.sbrf.integration.discovery.{DiscoveryEventType, AgentDiscoveryEvent, AgentAddress}
+import System._
+import java.util.concurrent.TimeUnit._
+import collection.mutable.Map
+import ru.sbrf.integration.discovery.{AgentDiscoveryEvent, AgentAddress}
+import akka.actor.{Scheduler, Actor}
 
 class AgentDiscoveryActor extends Actor {
 
-  val agents = List[ActorRef]()
+  val clean = "Clean"
+  val agents = Map[AgentAddress, Long]()
 
-  def newAgentDiscovered(address: AgentAddress) = {
-    println ("Discovered agent %s" format address)
-    address
+  override def preStart() { Scheduler.schedule( self, clean, 10, 10, SECONDS)}
+
+  def agentDiscovered(address: AgentAddress) {
+    agents += (address -> currentTimeMillis())
   }
-  def removeDiscoveredAgent(address: AgentAddress) = {
-    println ("Agent %s shutdowned" format address)
-    address
-  }
-  def listDiscoveredAgent(address: AgentAddress) = {
-    println ("List of agents")
-    agents
+
+  def cleanInactiveAgent() {
+    val current = currentTimeMillis()
+    val inactiveAgents = agents filter (current - _._2 > 10000)
+    agents --= inactiveAgents.keys
   }
 
   def receive = {
-    case AgentDiscoveryEvent(address, DiscoveryEventType.Add) => self reply newAgentDiscovered(address)
-    case AgentDiscoveryEvent(address, DiscoveryEventType.Remove) => self reply removeDiscoveredAgent(address)
-    case AgentDiscoveryEvent(address, DiscoveryEventType.List) => self reply listDiscoveredAgent(address)
+    case AgentDiscoveryEvent(address) => agentDiscovered(address)
+    case clean => cleanInactiveAgent()
   }
 }

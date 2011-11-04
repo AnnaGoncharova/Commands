@@ -11,7 +11,7 @@ import ru.sbrf.integration.agent.Agent
 @RunWith(classOf[JUnitRunner])
 class MasterActorSpec extends Specification {
 
-  Agent.run()
+  Agent.registerServices()
 
   val agent = actorOf[MasterActor].start()
 
