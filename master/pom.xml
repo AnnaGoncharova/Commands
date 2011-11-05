@@ -7,9 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.sbrf.integration</groupId>
     <artifactId>master</artifactId>
-    <version>1.0</version>
     <description>Master node</description>
     <inceptionYear>2011</inceptionYear>
 
