@@ -6,12 +6,16 @@ import collection.mutable.Map
 import ru.sbrf.integration.discovery.{AgentDiscoveryEvent, AgentAddress}
 import akka.actor.{Scheduler, Actor}
 
+object AgentDiscoveryActor {
+  val clean = "Clean"
+  val list = "List"
+}
+
 class AgentDiscoveryActor extends Actor {
 
-  val clean = "Clean"
   val agents = Map[AgentAddress, Long]()
 
-  override def preStart() { Scheduler.schedule( self, clean, 10, 10, SECONDS)}
+  override def preStart() { Scheduler.schedule( self, AgentDiscoveryActor.clean, 10, 10, SECONDS)}
 
   def agentDiscovered(address: AgentAddress) {
     agents += (address -> currentTimeMillis())
@@ -25,6 +29,7 @@ class AgentDiscoveryActor extends Actor {
 
   def receive = {
     case AgentDiscoveryEvent(address) => agentDiscovered(address)
-    case s: String => cleanInactiveAgent()
+    case AgentDiscoveryActor.clean => cleanInactiveAgent()
+    case AgentDiscoveryActor.list => self reply agents
   }
 }
