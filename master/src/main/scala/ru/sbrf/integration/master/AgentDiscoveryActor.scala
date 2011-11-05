@@ -30,6 +30,6 @@ class AgentDiscoveryActor extends Actor {
   def receive = {
     case AgentDiscoveryEvent(address) => agentDiscovered(address)
     case AgentDiscoveryActor.clean => cleanInactiveAgent()
-    case AgentDiscoveryActor.list => self reply agents
+    case AgentDiscoveryActor.list => { self reply agents.keySet }
   }
 }

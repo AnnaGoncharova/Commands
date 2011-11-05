@@ -6,8 +6,6 @@ import ru.sbrf.integration.master.AgentDiscoveryActor
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import ru.sbrf.integration.discovery.{AgentDiscoveryEvent, AgentAddress}
-import collection.mutable.Map
-import System._
 
 @RunWith(classOf[JUnitRunner])
 class AgentDiscoveryActorSpec extends Specification {
@@ -17,20 +15,19 @@ class AgentDiscoveryActorSpec extends Specification {
   val event = new AgentDiscoveryEvent(address)
 
   def listAgents() = {
-    (discovery ? AgentDiscoveryActor.list).get.asInstanceOf[Map[AgentAddress, Long]]
+    (discovery ? AgentDiscoveryActor.list).get.asInstanceOf[collection.Set[AgentAddress]]
   }
 
-  "Agent discovery actor and send active actors list on list message" should {
+  "Agent discovery actor" should {
 
-    "discover active actors" in {
+    "discover active actors and send active actors list on list message" in {
       discovery ? event
       val discoveredAgents = listAgents()
-      (discoveredAgents.keys.head) must_== address
+      discoveredAgents.head must_== address
     }
 
     "undiscover actors if they dont send discovery events" in {
       discovery ? event
-      val start = currentTimeMillis()
       val discoveredAgents = listAgents()
       Thread.sleep(20000)
       discoveredAgents must be empty
