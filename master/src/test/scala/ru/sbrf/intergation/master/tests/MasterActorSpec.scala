@@ -4,8 +4,7 @@ import org.specs2.mutable.Specification
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import akka.actor.Actor._
-import ru.sbrf.integration.agent.Agent
-import ru.sbrf.integration.master.{AgentDiscoveryActor, Master, MasterActor}
+import ru.sbrf.integration.master.{AgentDiscoveryActor, MasterActor}
 import ru.sbrf.integration.discovery.{AgentDiscoveryEvent, AgentAddress}
 import ru.sbrf.integration.commands.{Success, PingPong, Alive}
 
@@ -20,7 +19,6 @@ class MasterActorSpec extends Specification {
   discovery ? AgentDiscoveryEvent(new AgentAddress("localhost", 2222))
 
   val master = actorOf[MasterActor].start()
-  println("MasterActor started")
 
   "Master actor" should {
 

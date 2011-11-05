@@ -18,7 +18,6 @@ class AgentDiscoveryActor extends Actor {
   override def preStart() { Scheduler.schedule( self, AgentDiscoveryActor.clean, 10, 10, SECONDS)}
 
   def agentDiscovered(address: AgentAddress) {
-    println("Agent discovered " + address)
     agents += (address -> currentTimeMillis())
   }
 
