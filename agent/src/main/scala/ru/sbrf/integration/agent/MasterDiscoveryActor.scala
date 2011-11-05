@@ -7,12 +7,14 @@ import ru.sbrf.integration.discovery.{AgentAddress, AgentDiscoveryEvent}
 
 class MasterDiscoveryActor extends Actor {
 
-  val master = remote.actorFor("discovery-service", "localhost", 2222).start()
-  val event = new AgentDiscoveryEvent(new AgentAddress("localhost", 2222))
+  val event = new AgentDiscoveryEvent(new AgentAddress("localhost", 1111))
 
-  override def preStart() { Scheduler.schedule(master, event, 5, 5, SECONDS) }
+  override def preStart() { Scheduler.schedule(self, "Discover", 0, 5, SECONDS) }
 
   def receive = {
-    case wtf => {}
+    case wtf => {
+      val master = remote.actorFor("discovery-service", "localhost", 2222).start()
+      master ! event
+    }
   }
 }

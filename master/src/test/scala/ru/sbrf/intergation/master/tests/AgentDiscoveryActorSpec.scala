@@ -11,7 +11,7 @@ import ru.sbrf.integration.discovery.{AgentDiscoveryEvent, AgentAddress}
 class AgentDiscoveryActorSpec extends Specification {
 
   val discovery = actorOf[AgentDiscoveryActor].start()
-  val address: AgentAddress = new AgentAddress("myhost", 2222)
+  val address: AgentAddress = new AgentAddress("myhost", 1111)
   val event = new AgentDiscoveryEvent(address)
 
   def listAgents() = {
@@ -29,7 +29,8 @@ class AgentDiscoveryActorSpec extends Specification {
     "undiscover actors if they dont send discovery events" in {
       discovery ? event
       val discoveredAgents = listAgents()
-      Thread.sleep(20000)
+      Thread.sleep(12000)
+      discovery ? AgentDiscoveryActor.clean
       discoveredAgents must be empty
     }
   }

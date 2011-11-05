@@ -15,4 +15,6 @@ object Agent extends App {
 
   registerServices()
   startMasterDiscovery()
+
+  readLine()
 }

@@ -18,6 +18,7 @@ class AgentDiscoveryActor extends Actor {
   override def preStart() { Scheduler.schedule( self, AgentDiscoveryActor.clean, 10, 10, SECONDS)}
 
   def agentDiscovered(address: AgentAddress) {
+    println("Agent discovered " + address)
     agents += (address -> currentTimeMillis())
   }
 
@@ -30,6 +31,8 @@ class AgentDiscoveryActor extends Actor {
   def receive = {
     case AgentDiscoveryEvent(address) => agentDiscovered(address)
     case AgentDiscoveryActor.clean => cleanInactiveAgent()
-    case AgentDiscoveryActor.list => { self reply agents.keySet }
+    case AgentDiscoveryActor.list => {
+      self reply agents.keySet
+    }
   }
 }
