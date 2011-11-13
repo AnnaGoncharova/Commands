@@ -1,4 +1,4 @@
-package ru.sbrf.intergation.master.tests
+package ru.sbrf.integration.master.tests
 
 import akka.actor.Actor
 import ru.sbrf.integration.commands.{Alive, PingPong, Success}

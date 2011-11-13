@@ -1,4 +1,4 @@
-package ru.sbrf.intergation.master.tests
+package ru.sbrf.integration.master.tests
 
 import org.specs2.mutable.Specification
 import akka.actor.Actor._

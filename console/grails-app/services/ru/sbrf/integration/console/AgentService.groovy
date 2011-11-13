@@ -10,7 +10,6 @@ class AgentService {
     def List<AgentAddress> agentByMaster(Master master) {
         def masterActor = remote().actorFor("discovery-service", master.host, master.port).start()
         def addresses = masterActor.ask("List", 1000).get()
-        println addresses
         addresses.collect { it }
     }
 }

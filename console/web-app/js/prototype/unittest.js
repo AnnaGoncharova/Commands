@@ -126,10 +126,10 @@ Test.Unit.Logger.prototype = {
   addLinksToResults: function(){ 
     $$("tr.failed .nameCell").each( function(td){ // todo: limit to children of this.log
       td.title = "Run only this test";
-      Event.observe(td, 'click', function(){ window.location.search = "?tests=" + td.innerHTML;});
+      Event.observe(td, 'click', function(){ window.location.search = "?ru.sbrf.integration.agent.tests=" + td.innerHTML;});
     });
     $$("tr.passed .nameCell").each( function(td){ // todo: limit to children of this.log
-      td.title = "Run all tests";
+      td.title = "Run all ru.sbrf.integration.agent.tests";
       Event.observe(td, 'click', function(){ window.location.search = "";});
     });
   }
@@ -177,8 +177,8 @@ Test.Unit.Runner.prototype = {
     return window.location.search.parseQuery()["resultsURL"];
   },
   parseTestsQueryParameter: function(){
-    if (window.location.search.parseQuery()["tests"]){
-        return window.location.search.parseQuery()["tests"].split(',');
+    if (window.location.search.parseQuery()["ru.sbrf.integration.agent.tests"]){
+        return window.location.search.parseQuery()["ru.sbrf.integration.agent.tests"].split(',');
     };
   },
   // Returns:
@@ -241,7 +241,7 @@ Test.Unit.Runner.prototype = {
     }
     return (
       (this.options.context ? this.options.context + ': ': '') + 
-      this.tests.length + " tests, " + 
+      this.tests.length + " ru.sbrf.integration.agent.tests, " +
       assertions + " assertions, " + 
       failures   + " failures, " +
       errors     + " errors");

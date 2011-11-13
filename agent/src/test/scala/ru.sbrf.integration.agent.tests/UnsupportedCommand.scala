@@ -1,4 +1,4 @@
-package ru.sbrf.intergation.agent.tests
+package ru.sbrf.integration.agent.tests
 
 import ru.sbrf.integration.commands.Command
 

@@ -1,4 +1,4 @@
-package ru.sbrf.intergation.agent.tests.mock
+package ru.sbrf.integration.agent.tests.mock
 
 import akka.actor.Actor
 import ru.sbrf.integration.discovery.AgentDiscoveryEvent

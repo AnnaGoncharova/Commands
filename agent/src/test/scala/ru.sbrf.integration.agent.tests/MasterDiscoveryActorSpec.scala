@@ -1,4 +1,4 @@
-package ru.sbrf.intergation.agent.tests
+package ru.sbrf.integration.agent.tests
 
 import mock.MasterDiscoveryMock
 import org.junit.runner.RunWith
