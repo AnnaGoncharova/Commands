@@ -1,6 +1,13 @@
 package ru.sbrf.integration.discovery
 
-class AgentAddress(val host: String, val port: Int) extends Serializable {
+import scala.reflect.BeanProperty
+
+class AgentAddress(
+  @BeanProperty
+  val host: String,
+  @BeanProperty
+  val port: Int)
+extends Serializable {
 
   override def equals(obj: Any) = {
     if (obj.isInstanceOf[AgentAddress]) {
