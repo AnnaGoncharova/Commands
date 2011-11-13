@@ -27,7 +27,7 @@
           </tr>
           </thead>
           <tbody>
-            <g:each in="${agetntInstanceList}" status="i" var="agentInstance">
+            <g:each in="${agentsInstanceList}" status="i" var="agentInstance">
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                     <td>${fieldValue(bean: agentInstance, field: "host")}</td>
                     <td>${fieldValue(bean: agentInstance, field: "port")}</td>

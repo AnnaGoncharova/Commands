@@ -14,6 +14,6 @@ class MasterController {
         if (!master) {
             flash.message = "Master with id ${params.id} not found"
         }
-        [agetntInstanceList: agentService.agentByMaster(master)]
+        [agentsInstanceList: agentService.agentByMaster(master)]
     }
 }

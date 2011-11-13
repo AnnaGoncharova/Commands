@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit._
 import collection.mutable.Map
 import ru.sbrf.integration.discovery.{AgentDiscoveryEvent, AgentAddress}
 import akka.actor.{Scheduler, Actor}
+import java.util.{HashSet, Set}
 
 object AgentDiscoveryActor {
   val clean = "Clean"
@@ -31,7 +32,9 @@ class AgentDiscoveryActor extends Actor {
     case AgentDiscoveryEvent(address) => agentDiscovered(address)
     case AgentDiscoveryActor.clean => cleanInactiveAgent()
     case AgentDiscoveryActor.list => {
-      self reply agents.keySet
+      val agentAddresses: java.util.Set[AgentAddress] = new HashSet[AgentAddress]()
+      agents.keySet.foreach {e => agentAddresses.add(e)}
+      self reply agentAddresses
     }
   }
 }
