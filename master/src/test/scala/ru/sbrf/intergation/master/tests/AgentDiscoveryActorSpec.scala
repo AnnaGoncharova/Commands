@@ -6,6 +6,7 @@ import ru.sbrf.integration.master.AgentDiscoveryActor
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import ru.sbrf.integration.discovery.{AgentDiscoveryEvent, AgentAddress}
+import scala.collection.JavaConverters._
 
 @RunWith(classOf[JUnitRunner])
 class AgentDiscoveryActorSpec extends Specification {
@@ -15,7 +16,8 @@ class AgentDiscoveryActorSpec extends Specification {
   val event = new AgentDiscoveryEvent(address)
 
   def listAgents() = {
-    (discovery ? AgentDiscoveryActor.list).get.asInstanceOf[collection.Set[AgentAddress]]
+    val agentsSet = (discovery ? AgentDiscoveryActor.list).get.asInstanceOf[java.util.Set[AgentAddress]]
+    agentsSet.asScala.toSet
   }
 
   "Agent discovery actor" should {
@@ -28,9 +30,9 @@ class AgentDiscoveryActorSpec extends Specification {
 
     "undiscover actors if they dont send discovery events" in {
       discovery ? event
-      val discoveredAgents = listAgents()
       Thread.sleep(12000)
       discovery ? AgentDiscoveryActor.clean
+      val discoveredAgents = listAgents()
       discoveredAgents must be empty
     }
   }

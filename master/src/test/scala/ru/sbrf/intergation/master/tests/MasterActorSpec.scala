@@ -28,7 +28,7 @@ class MasterActorSpec extends Specification {
           value must be not empty
           value.head.result must_== true
         }
-        case wtf => failure("Master actor does not work properly " + wtf)
+        case wtf => failure("Master actor does not work properly " + wtf.getClass().getName())
       }
     }
 

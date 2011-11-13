@@ -4,13 +4,14 @@ import akka.actor.Actor._
 import ru.sbrf.integration.discovery.AgentAddress
 import akka.actor.{ActorRef, Actor}
 import ru.sbrf.integration.commands.{CommandResult, Failure, Command}
+import scala.collection.JavaConverters._
 
 class MasterActor extends Actor {
 
   val discovery = remote.actorFor("discovery-service", "localhost", 2222).start()
 
   def agentAddresses() = {
-    (discovery ? AgentDiscoveryActor.list).get.asInstanceOf[collection.Set[AgentAddress]]
+    (discovery ? AgentDiscoveryActor.list).get.asInstanceOf[java.util.Set[AgentAddress]].asScala.toSet
   }
 
   def sendCommand(command: Command[_]) = {
